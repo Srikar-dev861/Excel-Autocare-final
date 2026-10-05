@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-card-border: hsl(var(--card-border));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-popover-border: hsl(var(--popover-border));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-primary-border: var(--primary-border);
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-secondary-border: var(--secondary-border);
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-muted-border: var(--muted-border);
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-accent-border: var(--accent-border);
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-destructive-border: var(--destructive-border);
+
+  --font-sans: var(--app-font-sans);
+  --font-heading: var(--app-font-heading);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  /* White/brise light palette */
+  --background: 0 0% 100%;           /* #ffffff */
+  --foreground: 215 30% 15%;          /* #1C2B3A dark navy */
+
+  --card: 210 20% 98%;               /* #f8f9fb off-white */
+  --card-foreground: 215 30% 15%;
+  --card-border: 214 20% 90%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 215 30% 15%;
+  --popover-border: 214 20% 90%;
+
+  /* Primary = dark navy for text and key elements (#0c2340) */
+  --primary: 213 68% 15%;
+  --primary-foreground: 0 0% 100%;
+
+  /* Secondary = very light warm gray */
+  --secondary: 210 18% 96%;          /* #f2f5f8 */
+  --secondary-foreground: 215 30% 15%;
+
+  /* Muted */
+  --muted: 210 15% 94%;              /* #edf0f4 */
+  --muted-foreground: 215 16% 47%;   /* #6B7C93 */
+
+  /* Accent = Electric Maruti Blue (#0056b3) */
+  --accent: 211 100% 35%;
+  --accent-foreground: 0 0% 100%;
+
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 214 20% 88%;
+  --input: 214 20% 91%;
+  --ring: 211 100% 35%;
+
+  --app-font-sans: 'Inter', 'Roboto', 'Helvetica Neue', sans-serif;
+  --app-font-heading: 'Inter', 'Roboto', 'Helvetica Neue', sans-serif;
+  --radius: 0.5rem;
+
+  --button-outline: rgba(0,0,0,.08);
+  --badge-outline: rgba(0,0,0,.04);
+  --elevate-1: rgba(0,0,0,.02);
+  --elevate-2: rgba(0,0,0,.05);
+}
+
+@layer base {
+  * { @apply border-border; }
+  body {
+    @apply antialiased bg-background text-foreground;
+    font-family: var(--app-font-sans);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--app-font-heading);
+    line-height: 1.2;
+  }
+  h1 { font-size: 2.75rem; font-weight: 700; }
+  h2 { font-size: 2rem;    font-weight: 700; }
+  h3 { font-size: 1.35rem; font-weight: 600; }
+  h4 { font-size: 1.1rem;  font-weight: 600; }
+  @media (max-width: 768px) {
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.6rem; }
+  }
+}
+
+/* ─── Ticker ─────────────────────────────────────── */
+.animate-ticker {
+  animation: ticker 30s linear infinite;
+}
+@keyframes ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ─── Subtle shimmer on primary buttons ──────────── */
+.hover-beam {
+  position: relative;
+  overflow: hidden;
+}
+.hover-beam::after {
+  content: "";
+  position: absolute;
+  top: -20%;
+  left: -80%;
+  width: 55%;
+  height: 140%;
+  background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.28) 50%, transparent 80%);
+  transform: skewX(-20deg);
+  transition: left 0.5s ease;
+  pointer-events: none;
+}
+.hover-beam:hover::after { left: 130%; }
+
+/* ─── Card lift ──────────────────────────────────── */
+.service-card-lift {
+  transition: transform 0.3s cubic-bezier(0.34,1.3,0.64,1), box-shadow 0.3s ease;
+  will-change: transform;
+}
+.service-card-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px -8px rgba(29,53,87,0.12), 0 4px 12px -4px rgba(29,53,87,0.06);
+}
+
+/* ─── Glass card (light version) ─────────────────── */
+.glass-card {
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(214,222,235,0.7);
+}
+
+/* ─── Image overlay helpers ──────────────────────── */
+.img-overlay-dark {
+  background: linear-gradient(to right, rgba(26,46,74,0.85) 40%, rgba(26,46,74,0.3) 100%);
+}
+.img-overlay-mid {
+  background: rgba(26,46,74,0.55);
+}
+.img-overlay-light {
+  background: rgba(255,255,255,0.88);
+}
+
+/* ─── Gradient text ──────────────────────────────── */
+.gradient-text {
+  background: linear-gradient(135deg, #1a2e4a 0%, #2d5491 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Section divider ────────────────────────────── */
+.section-divider {
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #2d5491, transparent);
+  opacity: 0.3;
+}
+
+/* ─── GSAP reveal starting state ────────────────── */
+.gsap-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* ─── Small car wheel spinner (page transition) ──── */
+@keyframes wheel-rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.wheel-spin-sm {
+  animation: wheel-rotate 0.55s linear infinite;
+  transform-origin: center;
+}
+
+/* car body bounce during transition */
+@keyframes car-drive {
+  0%, 100% { transform: translateY(0); }
+  25%       { transform: translateY(-2px); }
+  75%       { transform: translateY(1px); }
+}
+.car-bounce {
+  animation: car-drive 0.4s ease-in-out infinite;
+}
+
+/* ─── Float badges ────────────────────────────────── */
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+.float-badge-1 { animation: float-y 4s ease-in-out infinite; }
+.float-badge-2 { animation: float-y 5s ease-in-out infinite; animation-delay: 1.2s; }
+.float-badge-3 { animation: float-y 4.5s ease-in-out infinite; animation-delay: 2.2s; }
+
+/* ─── Accent underline for headings ──────────────── */
+.heading-underline {
+  display: inline-block;
+  position: relative;
+}
+.heading-underline::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 40%;
+  height: 3px;
+  background: hsl(var(--accent));
+  border-radius: 2px;
+}
